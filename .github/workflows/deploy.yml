@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "${{ secrets.LINODE_KUBECONFIG }}" > kubeconfig.yaml
           kubectl config view --raw > kubeconfig-merged.yaml
-          KUBECONFIG=kubeconfig.yaml:kubeconfig-merged.yaml kubectl config use-context config
+          KUBECONFIG=kubeconfig.yaml:kubeconfig-merged.yaml kubectl config use-context linode
           
       - name: Apply Kubernetes deployment
         run: kubectl apply -f deployment.yaml
