@@ -21,21 +21,3 @@ jobs:
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Configure kubectl
-        uses: engineerd/setup-kubectl@v1
-        with:
-          version: latest
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
-      - name: Set image tag
-        id: vars
-        run: |
-          echo ::set-output name=IMAGE_TAG::$(echo $GITHUB_SHA)
-
-      - name: Update Kubernetes deployment
-        run: |
-          kubectl set image deployment/myapp-deployment myapp-container=myusername/myapp:${{ steps.vars.outputs.IMAGE_TAG }}
-
-      - name: Apply Kubernetes service
-        run: kubectl apply -f service.yaml
