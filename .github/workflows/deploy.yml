@@ -12,15 +12,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install Linode CLI
-        run: |
-          curl -sL https://raw.githubusercontent.com/linode/cli/master/install.sh | sudo bash
-
-      - name: Authenticate with Linode
-        env:
-          LINODE_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
-        run: linode-cli configure --api-token $LINODE_TOKEN
+        
+      - name: Setup Linode cli
+        uses: brendon1555/setup-linode-cli@master
+        with:
+          LINODE_CLI_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
+      - run: linode-cli --help
 
       - name: Deploy to Linode
         env:
