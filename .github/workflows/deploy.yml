@@ -26,7 +26,7 @@ jobs:
         env:
           KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}
         with:
-          args: get pods
+         args: get pods
           
       - name: Apply Kubernetes service
         run: kubectl apply -f deployment.yaml
