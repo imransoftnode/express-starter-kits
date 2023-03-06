@@ -1,0 +1,36 @@
+name: Deploy to Linode Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Linode CLI
+        run: |
+          curl -sL https://raw.githubusercontent.com/linode/cli/master/install.sh | sudo bash
+
+      - name: Authenticate with Linode
+        env:
+          LINODE_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
+        run: linode-cli configure --api-token $LINODE_TOKEN
+
+      - name: Deploy to Linode
+        env:
+          LINODE_KUBECONFIG: ${{ secrets.LINODE_KUBECONFIG }}
+        run: |
+          linode-cli k8s context switch --kubeconfig $LINODE_KUBECONFIG
+          kubectl apply -f deployment.yaml
+      - name: Apply Kubernetes service
+        env:
+          LINODE_KUBECONFIG: ${{ secrets.LINODE_KUBECONFIG }}
+        run: |
+          linode-cli k8s context switch --kubeconfig $LINODE_KUBECONFIG
+          kubectl apply -f service.yaml 
