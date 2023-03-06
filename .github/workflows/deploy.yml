@@ -20,6 +20,16 @@ jobs:
       - name: Set Linode CLI token
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Add linode context to kubeconfig files
+        run: |
+          kubectl config set-cluster linode --server=https://6685ec86-7c10-4c9e-91c6-45d7a64f8f85.ap-south-2.linodelke.net:443 --kubeconfig=kubeconfig.yaml
+          kubectl config set-context linode --cluster=linode --user=default --kubeconfig=kubeconfig.yaml
+          kubectl config use-context linode --kubeconfig=kubeconfig.yaml
+          kubectl config view --raw > kubeconfig-merged.yaml
+        env:
+          export LINODE_CLI_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
+
           
       - name: Configure kubectl
         run: |
