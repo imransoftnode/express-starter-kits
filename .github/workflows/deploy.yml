@@ -20,4 +20,17 @@ jobs:
       - name: Set Linode CLI token
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
+          
+      - name: Configure kubectl
+        uses: engineerd/setup-kubectl@v1
+        with:
+          version: latest
+        env:
+          KUBECONFIG: ${{ secrets.LINODE_KUBECONFIG }}
+          
+      - name: Apply Kubernetes service
+        run: kubectl apply -f deployment.yaml
+
+      - name: Apply Kubernetes service
+        run: kubectl apply -f service.yaml
 
