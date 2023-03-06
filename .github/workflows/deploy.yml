@@ -16,18 +16,18 @@ jobs:
       - name: Install Linode CLI
         run: |
           pip3 install linode-cli --upgrade
-
+          
       - name: Set Linode CLI token
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
       - name: Configure kubectl
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}          
-      - name: Apply Kubernetes service
+        uses: actions-hub/kubectl@master
+        with:
+          config: ${{ secrets.LINODE_KUBECONFIG }}
+          
+      - name: Apply Kubernetes deployment
         run: kubectl apply -f deployment.yaml
 
       - name: Apply Kubernetes service
         run: kubectl apply -f service.yaml
-
