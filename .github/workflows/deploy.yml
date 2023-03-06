@@ -22,9 +22,11 @@ jobs:
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
       - name: Configure kubectl
-        uses: actions-hub/kubectl@master
+      - uses: actions-hub/kubectl@master
         env:
-            KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}}
+          KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}
+        with:
+          args: get pods
           
       - name: Apply Kubernetes service
         run: kubectl apply -f deployment.yaml
