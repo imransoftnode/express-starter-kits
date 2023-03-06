@@ -24,7 +24,7 @@ jobs:
       - name: Configure kubectl
         uses: actions-hub/kubectl@master
         env:
-          config: ${{ secrets.LINODE_KUBECONFIG }}
+          KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}
           
       - name: Apply Kubernetes service
         run: kubectl apply -f deployment.yaml
