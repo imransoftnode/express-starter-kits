@@ -13,6 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Linode CLI
+        run: |
+          pip3 install linode-cli --upgrade
+
       - name: Set Linode CLI token
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
@@ -31,7 +35,7 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          kubectl set image deployment/myapp-deployment myapp-container=imranhsan871/backend:${{ steps.vars.outputs.IMAGE_TAG }}
+          kubectl set image deployment/myapp-deployment myapp-container=myusername/myapp:${{ steps.vars.outputs.IMAGE_TAG }}
 
       - name: Apply Kubernetes service
         run: kubectl apply -f service.yaml
