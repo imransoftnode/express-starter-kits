@@ -21,16 +21,10 @@ jobs:
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
-      - name: Configure kubectl
+      - uses: engineerd/setup-kind@v0.5.0
+      - name: Testing
         run: |
-          echo "${{ secrets.LINODE_KUBECONFIG }}" > kubeconfig.yaml
-          kubectl config view --raw > kubeconfig-merged.yaml
-          kubectl config use-context lke96590-ctx --cluster=lke96590 --user=lke96590-admin --kubeconfig=kubeconfig-merged.yaml
-        env:
-          LINODE_CLI_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
-          
-      - name: Apply Kubernetes deployment
-        run: kubectl cluster-info
-
-      - name: Apply Kubernetes service
-        run: kubectl cluster-info
+              kubectl cluster-info
+              kubectl get pods -n kube-system
+              echo "current-context:" $(kubectl config current-context)
+              echo "environment-kubeconfig:" ${KUBECONFIG}
