@@ -21,10 +21,12 @@ jobs:
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
-      - uses: engineerd/setup-kind@v0.5.0
-      - name: Testing
-        run: |
-              kubectl cluster-info
-              kubectl get pods -n kube-system
-              echo "current-context:" $(kubectl config current-context)
-              echo "environment-kubeconfig:" ${KUBECONFIG}
+      - name: Configure kubectl
+        uses: engineerd/setup-kubectl@v1
+        with:
+          version: latest
+        env:
+          KUBECONFIG: ${{ secrets.LINODE_KUBECONFIG }}
+          
+      - name: run
+        run: kubectl cluster-info
