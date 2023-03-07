@@ -23,7 +23,7 @@ jobs:
 
       - name: Add linode context to kubeconfig files
         run: |
-          kubectl config set-cluster linode --server=https://6685ec86-7c10-4c9e-91c6-45d7a64f8f85.ap-south-2.linodelke.net:443 --kubeconfig=kubeconfig.yaml
+          kubectl config set-cluster linode --server=https://6685ec86-7c10-4c9e-91c6-45d7a64f8f85.ap-south-2.linodelke.net --kubeconfig=kubeconfig.yaml
           kubectl config set-context linode --cluster=linode --user=default --kubeconfig=kubeconfig.yaml
           kubectl config use-context linode --kubeconfig=kubeconfig.yaml
           kubectl config view --raw > kubeconfig-merged.yaml
