@@ -16,4 +16,4 @@ spec:
         - name: myapp-container
           image: imranhasan871/backend:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 4000
