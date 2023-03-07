@@ -21,11 +21,10 @@ jobs:
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.LINODE_KUBECONFIG }}
-        with:
-          args: get pods
+      - name: add access
+        run: |
+          echo "${{ secrets.LINODE_KUBECONFIG }}" >> ./kubectl/config
+          
           
       - name: run
         run: kubectl cluster-info
