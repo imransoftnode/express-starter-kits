@@ -21,9 +21,11 @@ jobs:
         run: |
           echo "export LINODE_CLI_TOKEN=${{ secrets.LINODE_API_TOKEN }}" >> $GITHUB_ENV
           
-      - name: add access
-        run: |
-          echo "${{ secrets.LINODE_KUBECONFIG }}" >> ./kubectl/config
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.LINODE_KUBECONFIG }}
           
           
       - name: run
