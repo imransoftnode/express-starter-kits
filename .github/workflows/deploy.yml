@@ -27,6 +27,8 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.LINODE_KUBECONFIG }}
           
-          
-      - name: run
-        run: kubectl cluster-info
+      - name: Apply Kubernetes deployment
+        run: kubectl apply -f deployment.yaml
+
+      - name: Apply Kubernetes service
+        run: kubectl apply -f service.yaml
