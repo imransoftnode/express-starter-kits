@@ -31,7 +31,7 @@ jobs:
           export LINODE_CLI_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
           
       - name: Apply Kubernetes deployment
-        run: kubectl apply -f deployment.yaml
+        run: kubectl apply --dry-run=client -f deployment.yaml
 
       - name: Apply Kubernetes service
-        run: kubectl apply -f service.yaml
+        run: kubectl apply --dry-run=client -f deployment.yaml
