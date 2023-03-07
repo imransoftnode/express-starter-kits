@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "${{ secrets.LINODE_KUBECONFIG }}" > kubeconfig.yaml
           kubectl config view --raw > kubeconfig-merged.yaml
-          KUBECONFIG=kubeconfig.yaml:kubeconfig-merged.yaml kubectl config use-context SoftNode
+          KUBECONFIG=kubeconfig.yaml:kubeconfig-merged.yaml kubectl config use-context --cluster=lke96590 --user=lke96590-admin
         env:
           LINODE_CLI_TOKEN: ${{ secrets.LINODE_API_TOKEN }}
           
